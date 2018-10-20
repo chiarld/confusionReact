@@ -7,7 +7,7 @@ function RenderLeaders({leaders})
     return(
         leaders.map((leader) => {
             return(
-                <Media className className="mb-5">
+                <Media className="mb-5">
                     <Media left className="mr-5">
                         <Media object src={leader.image} alt={leader.name} />
                     </Media>
@@ -27,7 +27,7 @@ function RenderLeaders({leaders})
 
 function About(props) {
 
-    const leaders = props.leaders.map((leader) => {
+    props.leaders.map((leader) => {
         return (
             <p>Leader {leader.name}</p>
         );
