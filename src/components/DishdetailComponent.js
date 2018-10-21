@@ -164,7 +164,7 @@ class CommentForm extends Component
                                 </Col>
                             </Row>
                             <Row className="mb-2">
-                                <Col md={{size: 3, offset: 2}}>
+                                <Col md={{size: 3}}>
                                     <Button type="submit" color="primary">Submit</Button>
                                 </Col>
                             </Row>
