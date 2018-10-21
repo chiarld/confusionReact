@@ -18,25 +18,30 @@ function RenderDish({dish})
         </Card>
     );
 }
-function RenderComments({comments})
+function RenderComments({comments, addComment, dishId})
 {   
     return(
-        comments.map((comment) => {
-            return(
-                <div key={comment.id}>
-                    <li>{comment.comment}</li>
-                    <br></br>
-                    <li> -- {comment.author}, 
-                        {Intl.DateTimeFormat('en-US', {
-                        year: 'numeric',
-                        day: '2-digit',
-                        month: 'short'
-                        }).format(new Date(comment.date))} 
-                    </li>
-                    <br></br>
-                </div>
-            );
-        })
+        <React.Fragment>
+            {comments.map((comment) => {
+                return(
+                        <ul key={comment.id} className="list-unstyled">
+                            <li>
+                                <p>{comment.comment}</p>
+                                <br></br>
+                                <p> -- {comment.author}, 
+                                    {Intl.DateTimeFormat('en-US', {
+                                    year: 'numeric',
+                                    day: '2-digit',
+                                    month: 'short'
+                                    }).format(new Date(comment.date))} 
+                                </p>
+                                <br></br>
+                            </li>
+                        </ul>
+                );
+            })}
+            <CommentForm dishId={dishId} addComment={addComment} />
+        </React.Fragment>
     );
 }
 const DishDetail = (props) => {
@@ -68,8 +73,9 @@ const DishDetail = (props) => {
                     <div className="col-12 col-md-5 m-1">
                         <h4>Comments</h4>
                         <ul className="list-unstyled">
-                            <RenderComments comments={props.comments} />
-                            <CommentForm/>
+                            <RenderComments comments={props.comments} 
+                            addComment={props.addComment}
+                            dishId={props.dish.id}/>
                         </ul>
                     </div>
                 </div> 
@@ -102,8 +108,8 @@ class CommentForm extends Component
 
     handleSubmit(values)
     {
-        console.log(JSON.stringify(values));
-        alert(JSON.stringify(values));
+        this.toggleModal();
+        this.props.addComment(this.props.dishId, values.rating, values.name, values.comment);
     }
 
     render()
