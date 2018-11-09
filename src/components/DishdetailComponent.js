@@ -20,7 +20,7 @@ function RenderDish({dish})
         </Card>
     );
 }
-function RenderComments({comments, addComment, dishId})
+function RenderComments({comments, postComment, dishId})
 {   
     return(
         <React.Fragment>
@@ -42,7 +42,7 @@ function RenderComments({comments, addComment, dishId})
                         </ul>
                 );
             })}
-            <CommentForm dishId={dishId} addComment={addComment} />
+            <CommentForm dishId={dishId} postComment={postComment} />
         </React.Fragment>
     );
 }
@@ -89,7 +89,7 @@ const DishDetail = (props) => {
                         <h4>Comments</h4>
                         <ul className="list-unstyled">
                             <RenderComments comments={props.comments} 
-                            addComment={props.addComment}
+                            postComment={props.postComment}
                             dishId={props.dish.id}/>
                         </ul>
                     </div>
@@ -130,7 +130,7 @@ class CommentForm extends Component
     handleSubmit(values)
     {
         this.toggleModal();
-        this.props.addComment(this.props.dishId, values.rating, values.name, values.comment);
+        this.props.postComment(this.props.dishId, values.rating, values.name, values.comment);
     }
 
     render()
