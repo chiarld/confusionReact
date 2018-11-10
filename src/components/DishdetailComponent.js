@@ -30,31 +30,23 @@ function RenderDish({dish})
 function RenderComments({comments, postComment, dishId})
 {   
     return(
-        <Stagger in>
-            <React.Fragment>
-                {comments.map((comment) => {
-                    return(
-                        <ul key={comment.id} className="list-unstyled">
+        <React.Fragment>
+        <ul key={comments.id} className="list-unstyled">
+                <Stagger in>
+                    {comments.map((comment) => {
+                        return (
                             <Fade in>
-                                <li>
-                                    <p>{comment.comment}</p>
-                                    <br></br>
-                                        <p> -- {comment.author}, 
-                                            {Intl.DateTimeFormat('en-US', {
-                                            year: 'numeric',
-                                            day: '2-digit',
-                                            month: 'short'
-                                            }).format(new Date(comment.date))} 
-                                        </p>
-                                    <br></br>
-                                </li>
+                            <li key={comment.id}>
+                            <p>{comment.comment}</p>
+                            <p>-- {comment.author} , {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
+                            </li>
                             </Fade>
-                        </ul>
-                    );
-                })}
-                <CommentForm dishId={dishId} postComment={postComment} />
-            </React.Fragment>
-        </Stagger>
+                        );
+                    })}
+                </Stagger>
+            </ul>
+            <CommentForm dishId={dishId} postComment={postComment} />
+        </React.Fragment>
     );
 }
 const DishDetail = (props) => {
