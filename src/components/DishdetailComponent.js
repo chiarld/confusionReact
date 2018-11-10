@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { Loading } from './LoadingComponent';
 import { Control, LocalForm, Errors} from 'react-redux-form';
 import { baseUrl } from '../shared/baseUrl';
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 
 const maxLength = (len) => (val) => !(val) || (val.length <= len);
 const minLength = (len) => (val) => (val) && (val.length >= len);
@@ -11,39 +12,49 @@ const minLength = (len) => (val) => (val) && (val.length >= len);
 function RenderDish({dish})
 {
     return(
-        <Card>
-            <CardImg width ="100%" src={baseUrl + dish.image} alt={dish.name}/>
-            <CardBody>
-                <CardTitle>{dish.name}</CardTitle>
-                <CardText>{dish.description}</CardText>
-            </CardBody>
-        </Card>
+        <FadeTransform
+        in
+        transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)'
+        }}>
+            <Card>
+                <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+                <CardBody>
+                    <CardTitle>{dish.name}</CardTitle>
+                    <CardText>{dish.description}</CardText>
+                </CardBody>
+            </Card>
+        </FadeTransform>
     );
 }
 function RenderComments({comments, postComment, dishId})
 {   
     return(
-        <React.Fragment>
-            {comments.map((comment) => {
-                return(
+        <Stagger in>
+            <React.Fragment>
+                {comments.map((comment) => {
+                    return(
                         <ul key={comment.id} className="list-unstyled">
-                            <li>
-                                <p>{comment.comment}</p>
-                                <br></br>
-                                <p> -- {comment.author}, 
-                                    {Intl.DateTimeFormat('en-US', {
-                                    year: 'numeric',
-                                    day: '2-digit',
-                                    month: 'short'
-                                    }).format(new Date(comment.date))} 
-                                </p>
-                                <br></br>
-                            </li>
+                            <Fade in>
+                                <li>
+                                    <p>{comment.comment}</p>
+                                    <br></br>
+                                        <p> -- {comment.author}, 
+                                            {Intl.DateTimeFormat('en-US', {
+                                            year: 'numeric',
+                                            day: '2-digit',
+                                            month: 'short'
+                                            }).format(new Date(comment.date))} 
+                                        </p>
+                                    <br></br>
+                                </li>
+                            </Fade>
                         </ul>
-                );
-            })}
-            <CommentForm dishId={dishId} postComment={postComment} />
-        </React.Fragment>
+                    );
+                })}
+                <CommentForm dishId={dishId} postComment={postComment} />
+            </React.Fragment>
+        </Stagger>
     );
 }
 const DishDetail = (props) => {
