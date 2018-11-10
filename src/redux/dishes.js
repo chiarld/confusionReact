@@ -14,8 +14,7 @@ export const Dishes = (state = {
             return{...state, isLoading:true, errMess: null, dishes: []} // still immutable
             
         case ActionTypes.DISHES_FAILED:
-            return{...state, isLoading:false, errMess: action.payload, dishes: []} // still immutable
-            
+            return{...state, isLoading:false, errMess: action.payload, dishes: []} // still immutable 
         default:
             return state;
     }
